@@ -1,4 +1,6 @@
-//192.168.43.212
+//IP address - 192.168.43.212
+//chethancm2001kadur@gmail.com
+//Password Miniproject@12
 #include <SPI.h>
 #include "MFRC522.h"
 #include <Adafruit_MLX90614.h>

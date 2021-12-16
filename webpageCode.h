@@ -48,7 +48,7 @@ var timeStamp = [];
 setInterval(function() {
   // Call a function repetatively with 5 Second interval
   getData();
-}, 500); //5000mSeconds update rate
+}, 1000); //5000mSeconds update rate
 function getData() {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -77,5 +77,4 @@ function getData() {
 </script>
 </body>
 </html>
-
 )=====";

@@ -1,5 +1,5 @@
 #include <SPI.h>
-#include <MFRC522.h>
+#include "MFRC522.h"
 #include <Adafruit_MLX90614.h>
 #include <Wire.h>
 #include <ESP8266WiFi.h>
@@ -7,8 +7,8 @@
 #include "webpageCode.h";
 //------------------------------------------
 ESP8266WebServer server(80);
-const char* ssid = "chethancm";
-const char* password = "chethancm";
+const char* ssid = "miniproject";
+const char* password = "12345678";
 constexpr uint8_t RST_PIN = D3;     
 constexpr uint8_t SS_PIN = D4;
 double temperature(void);
@@ -44,6 +44,7 @@ void setup()
 //=================================================================
 void loop()
 {
+  
   server.handleClient();
 
    if ( ! rfid.PICC_IsNewCardPresent())
@@ -53,23 +54,26 @@ void loop()
       tag += rfid.uid.uidByte[i];
     }
     Serial.println(tag);
+    
     if(tag == "24311916221"){
-       rfidreading = "employee1";
-      Serial.print("employee1");
+        rfidreading ="Employee 1"; 
+      Serial.println(rfidreading);
       temp = temperature();
       String data = "{\"Name\":\""+ String(rfidreading) +"\", \"Temperature\":\""+ String(temp) +"\"}";
-     server.send(200, "text/plane", data);   
+     server.send(200, "text/plane", data);
+     
       
     }
-        if(tag == "511121617"){
-       rfidreading = "employee2"; 
-      Serial.print("employ2");
+         else if(tag == "511121617"){
+        rfidreading ="Employee 2"; 
+      Serial.println(rfidreading);
       temp = temperature();
       String data = "{\"Name\":\""+ String(rfidreading) +"\", \"Temperature\":\""+ String(temp) +"\"}";
-     server.send(200, "text/plane", data);   
+     server.send(200, "text/plane", data);
+     
       
     }
-          
+     delay(100);     
     tag = "";
     rfid.PICC_HaltA();
     rfid.PCD_StopCrypto1();
@@ -84,10 +88,8 @@ void loop()
 double temperature(){
 double temp3= mlx.readObjectTempF();
 double temp2 = mlx.readObjectTempC();
- if(isnan(temp2)){
-  temp2 = (temp3*(9/5))+32;
-  //T(°F) = T(°C) × 9/5 + 32
-  }
+
+
   Serial.print("the temperature is ");
   Serial.print(temp2);
   Serial.print("c");
